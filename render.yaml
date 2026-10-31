@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: poseit
+    runtime: static
+    staticPublishPath: .
+    buildCommand: ""
+    headers:
+      - path: /vendor/*
+        name: Cache-Control
+        value: public, max-age=604800

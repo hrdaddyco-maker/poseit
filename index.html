@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PoseIt: free live pose coach for photos</title>
+<meta name="description" content="PoseIt guides you into a great photo pose with a live camera outline, spoken tips and auto capture. Free. Photos stay on your device.">
+<meta name="theme-color" content="#111318">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <button id="backBtn" class="iconbtn" aria-label="Back to pose list" hidden>&#8592;</button>
+  <h1 class="logo">Pose<span>It</span></h1>
+  <button id="voiceBtn" class="iconbtn" aria-pressed="true" aria-label="Spoken instructions on">&#128266;</button>
+</header>
+<main id="main">
+  <section id="home" class="view">
+    <p class="lead">Pick a photo type. PoseIt shows a pose outline on your live camera, tells you what to adjust, and snaps the photo when you match.</p>
+    <p class="privacy"><strong>Your photos stay on your device.</strong> Photos you take are never uploaded. Pose detection runs inside your browser. The optional AI coach tip button sends one small frame only when you tap it.</p>
+    <ul id="poseList" class="grid" role="list"></ul>
+  </section>
+
+  <section id="guide" class="view" hidden aria-labelledby="guideTitle">
+    <h2 id="guideTitle"></h2>
+    <canvas id="demoCanvas" width="320" height="360" role="img" aria-label="Animated stick figure moving into the pose"></canvas>
+    <ol id="guideSteps" class="steps"></ol>
+    <div class="row">
+      <button id="replayBtn" class="btn ghost">Replay demo</button>
+      <button id="startBtn" class="btn">Start camera</button>
+    </div>
+    <p class="small">Tip: prop your phone up or ask a friend to hold it. Use the back camera for a friend, front camera for yourself.</p>
+  </section>
+
+  <section id="cam" class="view" hidden aria-label="Camera">
+    <div class="stage" id="stage">
+      <video id="video" playsinline muted autoplay></video>
+      <canvas id="overlay" aria-hidden="true"></canvas>
+      <div id="countdown" class="countdown" aria-live="assertive"></div>
+      <div id="flash" class="flash"></div>
+    </div>
+    <div class="hud">
+      <div class="meter" role="meter" aria-label="Pose match" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="meter">
+        <div class="bar" id="meterBar"></div><span id="meterText">0%</span>
+      </div>
+      <p id="instruction" class="instruction" aria-live="polite">Loading pose detection...</p>
+      <ol id="checklist" class="checklist"></ol>
+      <div class="row">
+        <button id="flipBtn" class="btn ghost">Flip camera</button>
+        <button id="autoBtn" class="btn ghost" aria-pressed="true">Auto capture: on</button>
+        <button id="snapBtn" class="btn">Take photo</button>
+      </div>
+      <button id="aiBtn" class="btn ghost">Ask AI coach for a tip</button>
+      <p class="small">AI coach is optional. Only when you tap it, one small still frame (no saved photo) is sent to a free public AI service (OVHcloud AI Endpoints, Qwen2.5-VL) to get tips. It is not stored by PoseIt. Limited to about 2 tips per minute.</p>
+      <p id="aiOut" class="instruction" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section id="result" class="view" hidden aria-labelledby="resTitle">
+    <h2 id="resTitle">Your photo</h2>
+    <img id="photo" alt="The photo you just took">
+    <p class="privacy">This photo exists only on this device until you save or share it.</p>
+    <div class="row">
+      <a id="saveBtn" class="btn" download="poseit.jpg">Save photo</a>
+      <button id="shareBtn" class="btn ghost" hidden>Share</button>
+      <button id="againBtn" class="btn ghost">Retake</button>
+    </div>
+  </section>
+</main>
+<footer class="foot"><p>Free to use. No account, no photo uploads, no tracking. Pose model: MediaPipe Pose Landmarker (Apache 2.0), served from this site.</p></footer>
+<script type="module" src="app.js"></script>
+</body>
+</html>
